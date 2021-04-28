@@ -1,6 +1,6 @@
 using System;
 
-namespace InternshipSystemBackend
+namespace Internship.Web
 {
     public class WeatherForecast
     {

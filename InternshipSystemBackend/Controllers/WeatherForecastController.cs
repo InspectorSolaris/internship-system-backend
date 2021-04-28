@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace InternshipSystemBackend.Controllers
+namespace Internship.Web.Controllers
 {
     [ApiController]
     [Route("[controller]")]

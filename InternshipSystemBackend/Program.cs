@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace InternshipSystemBackend
+namespace Internship.Web
 {
     public class Program
     {
