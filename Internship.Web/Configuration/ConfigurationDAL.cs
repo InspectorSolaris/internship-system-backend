@@ -3,6 +3,7 @@ using Internship.DAL.Models.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Internship.Web.Configuration
 {
@@ -15,11 +16,30 @@ namespace Internship.Web.Configuration
                 const string connectionStringKeyHeroku = "DATABASE_URL";
                 const string connectionStringKeyLocal = "ConnectionStrings:InternshipDbContext";
 
-                var connectionStringKey = configuration.GetSection(connectionStringKeyHeroku).Exists() ?
-                    connectionStringKeyHeroku :
-                    connectionStringKeyLocal;
+                var connectionString = string.Empty;
 
-                options.UseNpgsql(configuration[connectionStringKey]);
+                if (configuration.GetSection(connectionStringKeyHeroku).Exists())
+                {
+                    var connectionStringUri = configuration[connectionStringKeyHeroku];
+
+                    var uri = new Uri(connectionStringUri);
+
+                    var userinfo = uri.UserInfo.Split(':');
+                    
+                    var host = uri.Host;
+                    var port = uri.Port;
+                    var database = uri.AbsolutePath[1..];
+                    var username = userinfo[0];
+                    var password = userinfo[1];
+
+                    connectionString = $"Host={host};Port={port};Database={database};Username={username};Password={password};";
+                }
+                else
+                {
+                    connectionString = configuration[connectionStringKeyLocal];
+                }
+
+                options.UseNpgsql(connectionString);
             });
 
             serviceCollection.AddIdentity<User, Role>(setup =>
