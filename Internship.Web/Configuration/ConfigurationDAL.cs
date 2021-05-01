@@ -12,7 +12,14 @@ namespace Internship.Web.Configuration
         {
             serviceCollection.AddDbContext<InternshipDbContext>(options =>
             {
-                options.UseNpgsql(configuration["ConnectionStrings:InternshipDbContext"]);
+                const string connectionStringKeyHeroku = "DATABASE_URL";
+                const string connectionStringKeyLocal = "ConnectionStrings:InternshipDbContext";
+
+                var connectionStringKey = configuration.GetSection(connectionStringKeyHeroku).Exists() ?
+                    connectionStringKeyHeroku :
+                    connectionStringKeyLocal;
+
+                options.UseNpgsql(configuration[connectionStringKey]);
             });
 
             serviceCollection.AddIdentity<User, Role>(setup =>
