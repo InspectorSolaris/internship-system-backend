@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Internship.DAL.Models.Identity
 {
-    public abstract class User : IdentityUser<Guid>
+    public class User : IdentityUser<Guid>
     {
         public string Info { get; set; }
 
