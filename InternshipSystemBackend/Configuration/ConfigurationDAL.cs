@@ -23,7 +23,7 @@ namespace Internship.Web.Configuration
                 setup.Password.RequireLowercase = false;
                 setup.Password.RequireUppercase = false;
                 setup.Password.RequireDigit = false;
-            });
+            }).AddEntityFrameworkStores<InternshipDbContext>();
         }
     }
 }
