@@ -32,7 +32,7 @@ namespace Internship.Web.Configuration
                     var username = userinfo[0];
                     var password = userinfo[1];
 
-                    connectionString = $"Host={host};Port={port};Database={database};Username={username};Password={password};SSL Mode=Require;";
+                    connectionString = $"Host={host};Port={port};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true;";
                 }
                 else
                 {
