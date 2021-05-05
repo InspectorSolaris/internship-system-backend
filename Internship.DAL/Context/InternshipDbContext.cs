@@ -37,5 +37,7 @@ namespace Internship.DAL.Context
         public DbSet<SubjectInstance> SubjectInstances { get; set; }
 
         public DbSet<SubjectAssessment> SubjectAssessments { get; set; }
+
+        public DbSet<Document> Documents { get; set; }
     }
 }
