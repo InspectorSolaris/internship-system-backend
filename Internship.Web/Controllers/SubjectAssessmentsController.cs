@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Internship.DAL.Context;
+using Internship.DAL.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Internship.DAL.Context;
-using Internship.DAL.Models;
 
 namespace Internship.Web.Controllers
 {

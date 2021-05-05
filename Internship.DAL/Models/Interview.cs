@@ -1,5 +1,5 @@
-﻿using Internship.DAL.Models.Common;
-using Internship.DAL.Models.Enums;
+﻿using Internship.Common.Enums;
+using Internship.DAL.Models.Common;
 using Internship.DAL.Models.Identity;
 using System;
 

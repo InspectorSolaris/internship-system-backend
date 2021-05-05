@@ -1,4 +1,4 @@
-﻿namespace Internship.DAL.Models.Enums
+﻿namespace Internship.Common.Enums
 {
     public enum InterviewResult
     {

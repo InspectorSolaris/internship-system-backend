@@ -25,7 +25,7 @@ namespace Internship.Web.Configuration
                     var uri = new Uri(connectionStringUri);
 
                     var userinfo = uri.UserInfo.Split(':');
-                    
+
                     var host = uri.Host;
                     var port = uri.Port;
                     var database = uri.AbsolutePath[1..];
