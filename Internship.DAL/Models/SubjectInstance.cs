@@ -8,6 +8,6 @@ namespace Internship.DAL.Models
     {
         public int Year { get; set; }
 
-        public ICollection<User> Users { get; set; }
+        public ICollection<Student> Students { get; set; }
     }
 }

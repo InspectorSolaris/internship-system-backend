@@ -22,7 +22,5 @@ namespace Internship.Common.DTOs.Identity
         public ICollection<Guid> Specializations { get; set; }
 
         public ICollection<Guid> Technologies { get; set; }
-
-        public ICollection<Guid> SubjectInstances { get; set; }
     }
 }

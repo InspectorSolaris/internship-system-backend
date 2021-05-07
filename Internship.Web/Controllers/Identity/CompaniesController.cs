@@ -7,51 +7,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Internship.Web.Controllers
+namespace Internship.Web.Controllers.Identity
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HITsWorkersController : ControllerBase
+    public class CompaniesController : ControllerBase
     {
         private readonly InternshipDbContext _context;
 
-        public HITsWorkersController(InternshipDbContext context)
+        public CompaniesController(InternshipDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/HITsWorkers
+        // GET: api/Companies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<HITsWorker>>> GetHITsWorkers()
+        public async Task<ActionResult<IEnumerable<Company>>> GetCompanies()
         {
-            return await _context.HITsWorkers.ToListAsync();
+            return await _context.Companies.ToListAsync();
         }
 
-        // GET: api/HITsWorkers/5
+        // GET: api/Companies/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<HITsWorker>> GetHITsWorker(Guid id)
+        public async Task<ActionResult<Company>> GetCompany(Guid id)
         {
-            var hITsWorker = await _context.HITsWorkers.FindAsync(id);
+            var company = await _context.Companies.FindAsync(id);
 
-            if (hITsWorker == null)
+            if (company == null)
             {
                 return NotFound();
             }
 
-            return hITsWorker;
+            return company;
         }
 
-        // PUT: api/HITsWorkers/5
+        // PUT: api/Companies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHITsWorker(Guid id, HITsWorker hITsWorker)
+        public async Task<IActionResult> PutCompany(Guid id, Company company)
         {
-            if (id != hITsWorker.Id)
+            if (id != company.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(hITsWorker).State = EntityState.Modified;
+            _context.Entry(company).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +59,7 @@ namespace Internship.Web.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!HITsWorkerExists(id))
+                if (!CompanyExists(id))
                 {
                     return NotFound();
                 }
@@ -72,36 +72,36 @@ namespace Internship.Web.Controllers
             return NoContent();
         }
 
-        // POST: api/HITsWorkers
+        // POST: api/Companies
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<HITsWorker>> PostHITsWorker(HITsWorker hITsWorker)
+        public async Task<ActionResult<Company>> PostCompany(Company company)
         {
-            _context.HITsWorkers.Add(hITsWorker);
+            _context.Companies.Add(company);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetHITsWorker", new { id = hITsWorker.Id }, hITsWorker);
+            return CreatedAtAction("GetCompany", new { id = company.Id }, company);
         }
 
-        // DELETE: api/HITsWorkers/5
+        // DELETE: api/Companies/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteHITsWorker(Guid id)
+        public async Task<IActionResult> DeleteCompany(Guid id)
         {
-            var hITsWorker = await _context.HITsWorkers.FindAsync(id);
-            if (hITsWorker == null)
+            var company = await _context.Companies.FindAsync(id);
+            if (company == null)
             {
                 return NotFound();
             }
 
-            _context.HITsWorkers.Remove(hITsWorker);
+            _context.Companies.Remove(company);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool HITsWorkerExists(Guid id)
+        private bool CompanyExists(Guid id)
         {
-            return _context.HITsWorkers.Any(e => e.Id == id);
+            return _context.Companies.Any(e => e.Id == id);
         }
     }
 }

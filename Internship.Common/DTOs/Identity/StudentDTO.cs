@@ -20,6 +20,8 @@ namespace Internship.Common.DTOs.Identity
 
         public ICollection<Guid> Priorities { get; set; }
 
+        public ICollection<Guid> SubjectInstances { get; set; }
+
         public ICollection<Guid> Assessments { get; set; }
     }
 }

@@ -7,51 +7,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Internship.Web.Controllers
+namespace Internship.Web.Controllers.Identity
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StudentsController : ControllerBase
+    public class HITsWorkersController : ControllerBase
     {
         private readonly InternshipDbContext _context;
 
-        public StudentsController(InternshipDbContext context)
+        public HITsWorkersController(InternshipDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Students
+        // GET: api/HITsWorkers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
+        public async Task<ActionResult<IEnumerable<HITsWorker>>> GetHITsWorkers()
         {
-            return await _context.Students.ToListAsync();
+            return await _context.HITsWorkers.ToListAsync();
         }
 
-        // GET: api/Students/5
+        // GET: api/HITsWorkers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Student>> GetStudent(Guid id)
+        public async Task<ActionResult<HITsWorker>> GetHITsWorker(Guid id)
         {
-            var student = await _context.Students.FindAsync(id);
+            var hITsWorker = await _context.HITsWorkers.FindAsync(id);
 
-            if (student == null)
+            if (hITsWorker == null)
             {
                 return NotFound();
             }
 
-            return student;
+            return hITsWorker;
         }
 
-        // PUT: api/Students/5
+        // PUT: api/HITsWorkers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutStudent(Guid id, Student student)
+        public async Task<IActionResult> PutHITsWorker(Guid id, HITsWorker hITsWorker)
         {
-            if (id != student.Id)
+            if (id != hITsWorker.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(student).State = EntityState.Modified;
+            _context.Entry(hITsWorker).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +59,7 @@ namespace Internship.Web.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StudentExists(id))
+                if (!HITsWorkerExists(id))
                 {
                     return NotFound();
                 }
@@ -72,36 +72,36 @@ namespace Internship.Web.Controllers
             return NoContent();
         }
 
-        // POST: api/Students
+        // POST: api/HITsWorkers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Student>> PostStudent(Student student)
+        public async Task<ActionResult<HITsWorker>> PostHITsWorker(HITsWorker hITsWorker)
         {
-            _context.Students.Add(student);
+            _context.HITsWorkers.Add(hITsWorker);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetStudent", new { id = student.Id }, student);
+            return CreatedAtAction("GetHITsWorker", new { id = hITsWorker.Id }, hITsWorker);
         }
 
-        // DELETE: api/Students/5
+        // DELETE: api/HITsWorkers/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteStudent(Guid id)
+        public async Task<IActionResult> DeleteHITsWorker(Guid id)
         {
-            var student = await _context.Students.FindAsync(id);
-            if (student == null)
+            var hITsWorker = await _context.HITsWorkers.FindAsync(id);
+            if (hITsWorker == null)
             {
                 return NotFound();
             }
 
-            _context.Students.Remove(student);
+            _context.HITsWorkers.Remove(hITsWorker);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool StudentExists(Guid id)
+        private bool HITsWorkerExists(Guid id)
         {
-            return _context.Students.Any(e => e.Id == id);
+            return _context.HITsWorkers.Any(e => e.Id == id);
         }
     }
 }

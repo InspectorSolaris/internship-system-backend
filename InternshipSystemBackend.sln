@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Internship.DAL", "Internshi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Internship.Web", "Internship.Web\Internship.Web.csproj", "{749A7C1C-5ABA-4197-B2B6-2090B8C050AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Internship.Common", "Internship.Common\Internship.Common.csproj", "{5A8D0F37-0B4E-4D5F-B642-23E6DFFDCBCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Internship.Common", "Internship.Common\Internship.Common.csproj", "{5A8D0F37-0B4E-4D5F-B642-23E6DFFDCBCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Internship.BL", "Internship.BL\Internship.BL.csproj", "{075A68E1-3AF5-4E2A-B0DC-229439BD567C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{5A8D0F37-0B4E-4D5F-B642-23E6DFFDCBCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A8D0F37-0B4E-4D5F-B642-23E6DFFDCBCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A8D0F37-0B4E-4D5F-B642-23E6DFFDCBCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{075A68E1-3AF5-4E2A-B0DC-229439BD567C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{075A68E1-3AF5-4E2A-B0DC-229439BD567C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{075A68E1-3AF5-4E2A-B0DC-229439BD567C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{075A68E1-3AF5-4E2A-B0DC-229439BD567C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -19,6 +19,8 @@ namespace Internship.DAL.Models.Identity
 
         public ICollection<PriorityStudent> Priorities { get; set; }
 
+        public ICollection<SubjectInstance> SubjectInstances { get; set; }
+
         public ICollection<InternshipAssessment> Assessments { get; set; }
     }
 }

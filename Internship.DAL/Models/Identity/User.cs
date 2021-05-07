@@ -13,7 +13,5 @@ namespace Internship.DAL.Models.Identity
         public ICollection<Specialization> Specializations { get; set; }
 
         public ICollection<Technology> Technologies { get; set; }
-
-        public ICollection<SubjectInstance> SubjectInstances { get; set; }
     }
 }
