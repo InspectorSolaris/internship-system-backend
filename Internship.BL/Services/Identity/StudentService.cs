@@ -1,6 +1,7 @@
 ﻿using Internship.Common.Dtos.Identity;
 using Internship.DAL.Context;
 using Internship.DAL.Models.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -9,7 +10,11 @@ namespace Internship.BL.Services.Identity
 {
     public class StudentService : UserService<Student, StudentDto>
     {
-        public StudentService(InternshipDbContext context) : base(context)
+        public StudentService(
+            InternshipDbContext context,
+            UserManager<Student> userManager,
+            RoleManager<Student> roleManager)
+            : base(context, userManager, roleManager)
         {
         }
 
@@ -21,40 +26,72 @@ namespace Internship.BL.Services.Identity
                     .Include(user => user.Interviews)
                     .Include(user => user.Priorities)
                     .Include(user => user.SubjectInstances)
-                    .Include(user => user.Assessments);
+                    .Include(user => user.SubjectAssessments)
+                    .Include(user => user.InternshipAssessments);
         }
 
         protected override StudentDto GetDto(Student user)
         {
-            return new StudentDto()
+            var userDto = base.GetDto(user);
+
+            userDto.FirstName = user.FirstName;
+            userDto.MiddleName = user.MiddleName;
+            userDto.LastName = user.LastName;
+            userDto.Interviews = user.Interviews.Select(entity => entity.Id);
+            userDto.Priorities = user.Priorities.Select(entity => entity.Id);
+            userDto.SubjectInstances = user.SubjectInstances.Select(entity => entity.Id);
+            userDto.SubjectAssessments = user.SubjectAssessments.Select(entity => entity.Id);
+            userDto.InternshipAssessments = user.InternshipAssessments.Select(entity => entity.Id);
+
+            return userDto;
+        }
+
+        protected async override void Update(Student user, StudentDto userDto)
+        {
+            base.Update(user, userDto);
+
+            user.FirstName = userDto.FirstName;
+            user.MiddleName = userDto.MiddleName;
+            user.LastName = userDto.LastName;
+            user.Interviews = await _context.Interviews.Where(entity => userDto.Interviews.Contains(entity.Id)).ToListAsync();
+            user.Priorities = await _context.PriorityStudents.Where(entity => userDto.Priorities.Contains(entity.Id)).ToListAsync();
+            user.SubjectInstances = await _context.SubjectInstances.Where(entity => userDto.SubjectInstances.Contains(entity.Id)).ToListAsync();
+            user.SubjectAssessments = await _context.SubjectAssessments.Where(entity => userDto.SubjectInstances.Contains(entity.Id)).ToListAsync();
+            user.InternshipAssessments = await _context.InternshipAssessments.Where(entity => userDto.InternshipAssessments.Contains(entity.Id)).ToListAsync();
+        }
+
+        public async override void Create(StudentDto userDto)
+        {
+            var user = new Student()
             {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                MiddleName = user.MiddleName,
-                LastName = user.LastName,
-                Interviews = user.Interviews.Select(user => user.Id),
-                Priorities = user.Priorities.Select(user => user.Id),
-                SubjectInstances = user.SubjectInstances.Select(user => user.Id),
-                Assessments = user.Assessments.Select(user => user.Id)
+                Id = Guid.NewGuid()
             };
+
+            Update(user, userDto);
+
+            _context.Students.Add(user);
+
+            await _context.SaveChangesAsync();
         }
 
-        public override void Create(StudentDto userDto)
+        public async override void Update(StudentDto userDto)
         {
-            throw new NotImplementedException();
+            var user = await _context.Students
+                .FirstOrDefaultAsync(user => user.Id == userDto.Id);
+
+            Update(user, userDto);
+
+            await _context.SaveChangesAsync();
         }
 
-        public override void Update(StudentDto userDto)
+        public async override void Delete(Guid id)
         {
-            throw new NotImplementedException();
-        }
-
-        public override void Delete(Guid id)
-        {
-            var user = _context.Students
-                .FirstOrDefault(user => user.Id == id);
+            var user = await _context.Students
+                .FirstOrDefaultAsync(user => user.Id == id);
 
             _context.Students.Remove(user);
+
+            await _context.SaveChangesAsync();
         }
     }
 }

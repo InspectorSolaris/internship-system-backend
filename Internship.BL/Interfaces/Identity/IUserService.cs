@@ -2,6 +2,7 @@
 using Internship.DAL.Models.Identity;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Internship.BL.Interfaces.Identity
 {
@@ -9,13 +10,13 @@ namespace Internship.BL.Interfaces.Identity
         where TUser : User
         where TUserDto : UserDto
     {
-        void Create(TUserDto entityDto);
+        void Create(TUserDto userDto);
 
-        IEnumerable<TUserDto> Retrieve();
+        Task<IEnumerable<TUserDto>> Retrieve();
 
-        TUserDto Retrieve(Guid id);
+        Task<TUserDto> Retrieve(Guid id);
 
-        void Update(TUserDto entityDto);
+        void Update(TUserDto userDto);
 
         void Delete(Guid id);
     }

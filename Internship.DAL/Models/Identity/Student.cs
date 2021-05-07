@@ -21,6 +21,8 @@ namespace Internship.DAL.Models.Identity
 
         public ICollection<SubjectInstance> SubjectInstances { get; set; }
 
-        public ICollection<InternshipAssessment> Assessments { get; set; }
+        public ICollection<SubjectAssessment> SubjectAssessments { get; set; }
+
+        public ICollection<InternshipAssessment> InternshipAssessments { get; set; }
     }
 }

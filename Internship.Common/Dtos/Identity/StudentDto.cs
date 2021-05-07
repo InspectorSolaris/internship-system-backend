@@ -22,6 +22,8 @@ namespace Internship.Common.Dtos.Identity
 
         public IEnumerable<Guid> SubjectInstances { get; set; }
 
-        public IEnumerable<Guid> Assessments { get; set; }
+        public IEnumerable<Guid> SubjectAssessments { get; set; }
+
+        public IEnumerable<Guid> InternshipAssessments { get; set; }
     }
 }
