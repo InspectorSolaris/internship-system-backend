@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Internship.BL\Internship.BL.csproj" />
     <ProjectReference Include="..\Internship.DAL\Internship.DAL.csproj" />
   </ItemGroup>
 

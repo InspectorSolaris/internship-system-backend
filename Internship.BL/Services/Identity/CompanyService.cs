@@ -3,13 +3,12 @@ using Internship.DAL.Context;
 using Internship.DAL.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Internship.BL.Services.Identity
 {
-    class CompanyService : UserService<Company, CompanyDto>
+    public class CompanyService : UserService<Company, CompanyDto>
     {
         public CompanyService(
             InternshipDbContext context,

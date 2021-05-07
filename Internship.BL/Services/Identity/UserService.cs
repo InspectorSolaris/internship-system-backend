@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Internship.BL.Services.Identity
 {
-    public abstract class UserService<TUser, TUserDto> : IUserService<TUser, TUserDto>
+    public abstract class UserService<TUser, TUserDto> : IUserService<TUserDto>
         where TUser : User, new()
         where TUserDto : UserDto, new()
     {
@@ -104,6 +104,11 @@ namespace Internship.BL.Services.Identity
             DbSet.Remove(user);
 
             await _context.SaveChangesAsync();
+        }
+
+        public async virtual Task<bool> Exists(Guid id)
+        {
+            return await DbSet.AnyAsync(user => user.Id == id);
         }
     }
 }

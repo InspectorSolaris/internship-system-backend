@@ -27,6 +27,7 @@ namespace Internship.Web
             });
 
             services.ConfigureDAL(_configuration);
+            services.ConfigureBL(_configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

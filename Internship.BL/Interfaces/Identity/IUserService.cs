@@ -1,13 +1,11 @@
 ﻿using Internship.Common.Dtos.Identity;
-using Internship.DAL.Models.Identity;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Internship.BL.Interfaces.Identity
 {
-    public interface IUserService<TUser, TUserDto>
-        where TUser : User
+    public interface IUserService<TUserDto>
         where TUserDto : UserDto
     {
         Task Create(TUserDto userDto);
@@ -19,5 +17,7 @@ namespace Internship.BL.Interfaces.Identity
         Task Update(TUserDto userDto);
 
         Task Delete(Guid id);
+
+        Task<bool> Exists(Guid id);
     }
 }
