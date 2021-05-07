@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Internship.Common.DTOs.Common
+namespace Internship.Common.Dtos.Common
 {
-    public class EntityDTO
+    public class EntityDto
     {
         public Guid Id { get; set; }
     }

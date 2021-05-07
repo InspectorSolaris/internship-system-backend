@@ -1,8 +1,8 @@
-﻿using Internship.Common.DTOs.Common;
+﻿using Internship.Common.Dtos.Common;
 
-namespace Internship.Common.DTOs
+namespace Internship.Common.Dtos
 {
-    public class SubjectDTO : EntityNamedDTO
+    public class SubjectDto : EntityNamedDto
     {
     }
 }

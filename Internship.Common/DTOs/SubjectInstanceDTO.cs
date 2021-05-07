@@ -1,10 +1,10 @@
-﻿using Internship.Common.DTOs.Common;
+﻿using Internship.Common.Dtos.Common;
 using System;
 using System.Collections.Generic;
 
-namespace Internship.Common.DTOs
+namespace Internship.Common.Dtos
 {
-    public class SubjectInstanceDTO : EntityDTO
+    public class SubjectInstanceDto : EntityDto
     {
         public int Year { get; set; }
 

@@ -1,9 +1,9 @@
-﻿using Internship.Common.DTOs.Common;
+﻿using Internship.Common.Dtos.Common;
 using System;
 
-namespace Internship.Common.DTOs
+namespace Internship.Common.Dtos
 {
-    public class SubjectAssessmentDTO : EntityDTO
+    public class SubjectAssessmentDto : EntityDto
     {
         public Guid SubjectId { get; set; }
 

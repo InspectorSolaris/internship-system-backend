@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Internship.Common.DTOs.Identity
+namespace Internship.Common.Dtos.Identity
 {
-    public class UserDTO
+    public class UserDto
     {
         public Guid Id { get; set; }
 

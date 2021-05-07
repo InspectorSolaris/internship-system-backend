@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Internship.Common.DTOs.Common
+namespace Internship.Common.Dtos.Common
 {
-    public class EntityNamedDTO
+    public class EntityNamedDto
     {
         [Required]
         [StringLength(64, MinimumLength = 2)]

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Internship.Common.DTOs.Identity
+namespace Internship.Common.Dtos.Identity
 {
-    public class HITsWorkerDTO : UserDTO
+    public class HITsWorkerDto : UserDto
     {
         [Required]
         [StringLength(32, MinimumLength = 2)]

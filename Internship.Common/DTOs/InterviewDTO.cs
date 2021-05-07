@@ -1,10 +1,10 @@
-﻿using Internship.Common.DTOs.Common;
+﻿using Internship.Common.Dtos.Common;
 using Internship.Common.Enums;
 using System;
 
-namespace Internship.Common.DTOs
+namespace Internship.Common.Dtos
 {
-    public class InterviewDTO : EntityDTO
+    public class InterviewDto : EntityDto
     {
         public InterviewResult Result { get; set; }
 

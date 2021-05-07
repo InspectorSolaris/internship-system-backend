@@ -1,4 +1,4 @@
-﻿using Internship.Common.DTOs.Identity;
+﻿using Internship.Common.Dtos.Identity;
 using Internship.DAL.Context;
 using Internship.DAL.Models.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -23,12 +23,12 @@ namespace Internship.Web.Controllers.Identity
 
         // GET: api/Students
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<StudentDTO>>> GetStudents()
+        public async Task<ActionResult<IEnumerable<StudentDto>>> GetStudents()
         {
             return await _context.Students
                 .Include(e => e.Specializations)
                 .Include(e => e.Technologies)
-                .Select(e => new StudentDTO()
+                .Select(e => new StudentDto()
                 {
                     Id = e.Id,
                     UserName = e.UserName,
@@ -45,7 +45,7 @@ namespace Internship.Web.Controllers.Identity
 
         // GET: api/Students/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<StudentDTO>> GetStudent(Guid id)
+        public async Task<ActionResult<StudentDto>> GetStudent(Guid id)
         {
             var student = await _context.Students
                 .Include(e => e.Specializations)
@@ -57,7 +57,7 @@ namespace Internship.Web.Controllers.Identity
                 return NotFound();
             }
 
-            return new StudentDTO()
+            return new StudentDto()
             {
                 Id = student.Id,
                 UserName = student.UserName,
@@ -74,7 +74,7 @@ namespace Internship.Web.Controllers.Identity
         // PUT: api/Students/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutStudent(Guid id, StudentDTO student)
+        public async Task<IActionResult> PutStudent(Guid id, StudentDto student)
         {
             if (id != student.Id)
             {
@@ -105,7 +105,7 @@ namespace Internship.Web.Controllers.Identity
         // POST: api/Students
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<StudentDTO>> PostStudent(StudentDTO student)
+        public async Task<ActionResult<StudentDto>> PostStudent(StudentDto student)
         {
             _context.Students.Add(new Student()
             {

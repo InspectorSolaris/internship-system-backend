@@ -1,9 +1,9 @@
-﻿using Internship.Common.DTOs.Common;
+﻿using Internship.Common.Dtos.Common;
 using System;
 
-namespace Internship.Common.DTOs
+namespace Internship.Common.Dtos
 {
-    public abstract class PriorityDTO : EntityDTO
+    public abstract class PriorityDto : EntityDto
     {
         public int Value { get; set; }
 

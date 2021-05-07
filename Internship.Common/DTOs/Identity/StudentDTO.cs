@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Internship.Common.DTOs.Identity
+namespace Internship.Common.Dtos.Identity
 {
-    public class StudentDTO : UserDTO
+    public class StudentDto : UserDto
     {
         [Required]
         [StringLength(32, MinimumLength = 2)]

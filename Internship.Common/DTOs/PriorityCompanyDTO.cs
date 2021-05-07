@@ -1,6 +1,6 @@
-﻿namespace Internship.Common.DTOs
+﻿namespace Internship.Common.Dtos
 {
-    public class PriorityCompanyDTO : PriorityDTO
+    public class PriorityCompanyDto : PriorityDto
     {
     }
 }
