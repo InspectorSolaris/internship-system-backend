@@ -19,12 +19,12 @@ namespace Internship.BL.Services.Identity
 
         protected readonly UserManager<TUser> _userManager;
 
-        protected readonly RoleManager<TUser> _roleManager;
+        protected readonly RoleManager<Role> _roleManager;
 
         protected UserService(
             InternshipDbContext context,
             UserManager<TUser> userManager,
-            RoleManager<TUser> roleManager)
+            RoleManager<Role> roleManager)
         {
             _context = context;
             _userManager = userManager;
