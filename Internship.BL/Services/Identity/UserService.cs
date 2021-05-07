@@ -64,7 +64,7 @@ namespace Internship.BL.Services.Identity
                 Id = Guid.NewGuid()
             };
 
-            Update(user, userDto);
+            await Update(user, userDto);
 
             DbSet.Add(user);
 
@@ -91,7 +91,7 @@ namespace Internship.BL.Services.Identity
             var user = await DbSet
                 .FirstOrDefaultAsync(user => user.Id == userDto.Id);
 
-            Update(user, userDto);
+            await Update(user, userDto);
 
             await _context.SaveChangesAsync();
         }
