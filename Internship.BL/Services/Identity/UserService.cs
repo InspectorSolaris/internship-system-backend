@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Internship.BL.Services.Identity
 {
     public abstract class UserService<TUser, TUserDto> : IUserService<TUser, TUserDto>
-        where TUser : User
+        where TUser : User, new()
         where TUserDto : UserDto, new()
     {
         protected readonly InternshipDbContext _context;
@@ -31,7 +31,9 @@ namespace Internship.BL.Services.Identity
             _roleManager = roleManager;
         }
 
-        protected abstract IQueryable<TUser> GetQuery(bool full = false);
+        protected abstract DbSet<TUser> DbSet { get; }
+
+        protected abstract IQueryable<TUser> Query { get; }
 
         protected virtual TUserDto GetDto(TUser user)
         {
@@ -46,7 +48,7 @@ namespace Internship.BL.Services.Identity
             };
         }
 
-        protected async virtual void Update(TUser user, TUserDto userDto)
+        protected async virtual Task Update(TUser user, TUserDto userDto)
         {
             user.UserName = userDto.UserName;
             user.Email = userDto.Email;
@@ -55,25 +57,53 @@ namespace Internship.BL.Services.Identity
             user.Technologies = await _context.Technologies.Where(entity => userDto.Specializations.Contains(entity.Id)).ToListAsync();
         }
 
-        public abstract void Create(TUserDto userDto);
+        public async virtual Task Create(TUserDto userDto)
+        {
+            var user = new TUser()
+            {
+                Id = Guid.NewGuid()
+            };
+
+            Update(user, userDto);
+
+            DbSet.Add(user);
+
+            await _context.SaveChangesAsync();
+        }
 
         public async virtual Task<IEnumerable<TUserDto>> Retrieve()
         {
-            return await GetQuery(true)
+            return await Query
                 .Select(user => GetDto(user))
                 .ToListAsync();
         }
 
         public async virtual Task<TUserDto> Retrieve(Guid id)
         {
-            var user = await GetQuery(true)
+            var user = await Query
                 .FirstOrDefaultAsync(user => user.Id == id);
 
             return GetDto(user);
         }
 
-        public abstract void Update(TUserDto userDto);
+        public async virtual Task Update(TUserDto userDto)
+        {
+            var user = await DbSet
+                .FirstOrDefaultAsync(user => user.Id == userDto.Id);
 
-        public abstract void Delete(Guid id);
+            Update(user, userDto);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async virtual Task Delete(Guid id)
+        {
+            var user = await DbSet
+                .FirstOrDefaultAsync(user => user.Id == id);
+
+            DbSet.Remove(user);
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

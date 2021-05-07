@@ -1,5 +1,6 @@
 ﻿using Internship.DAL.Context;
 using Internship.DAL.Models.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,7 +33,14 @@ namespace Internship.Web.Configuration
                     var username = userinfo[0];
                     var password = userinfo[1];
 
-                    connectionString = $"Host={host};Port={port};Database={database};Username={username};Password={password};SSL Mode=Require;Trust Server Certificate=true;";
+                    connectionString = $@"
+                        Host={host};
+                        Port={port};
+                        Database={database};
+                        Username={username};
+                        Password={password};
+                        SSL Mode=Require;
+                        Trust Server Certificate=true;";
                 }
                 else
                 {
@@ -42,7 +50,7 @@ namespace Internship.Web.Configuration
                 options.UseNpgsql(connectionString);
             });
 
-            serviceCollection.AddIdentity<User, Role>(setup =>
+            Action<IdentityOptions> setup = setup =>
             {
                 setup.User.RequireUniqueEmail = true;
 
@@ -50,7 +58,19 @@ namespace Internship.Web.Configuration
                 setup.Password.RequireLowercase = false;
                 setup.Password.RequireUppercase = false;
                 setup.Password.RequireDigit = false;
-            }).AddEntityFrameworkStores<InternshipDbContext>();
+            };
+
+            serviceCollection.AddIdentityCore<Student>(setup)
+                .AddRoles<Role>()
+                .AddEntityFrameworkStores<InternshipDbContext>();
+
+            serviceCollection.AddIdentityCore<HITsWorker>(setup)
+                .AddRoles<Role>()
+                .AddEntityFrameworkStores<InternshipDbContext>();
+
+            serviceCollection.AddIdentityCore<Company>(setup)
+                .AddRoles<Role>()
+                .AddEntityFrameworkStores<InternshipDbContext>();
         }
     }
 }

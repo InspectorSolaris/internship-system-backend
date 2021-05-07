@@ -10,14 +10,14 @@ namespace Internship.BL.Interfaces.Identity
         where TUser : User
         where TUserDto : UserDto
     {
-        void Create(TUserDto userDto);
+        Task Create(TUserDto userDto);
 
         Task<IEnumerable<TUserDto>> Retrieve();
 
         Task<TUserDto> Retrieve(Guid id);
 
-        void Update(TUserDto userDto);
+        Task Update(TUserDto userDto);
 
-        void Delete(Guid id);
+        Task Delete(Guid id);
     }
 }
