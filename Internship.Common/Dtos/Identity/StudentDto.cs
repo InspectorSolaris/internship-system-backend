@@ -16,12 +16,12 @@ namespace Internship.Common.Dtos.Identity
         [StringLength(32, MinimumLength = 2)]
         public string LastName { get; set; }
 
-        public ICollection<Guid> Interviews { get; set; }
+        public IEnumerable<Guid> Interviews { get; set; }
 
-        public ICollection<Guid> Priorities { get; set; }
+        public IEnumerable<Guid> Priorities { get; set; }
 
-        public ICollection<Guid> SubjectInstances { get; set; }
+        public IEnumerable<Guid> SubjectInstances { get; set; }
 
-        public ICollection<Guid> Assessments { get; set; }
+        public IEnumerable<Guid> Assessments { get; set; }
     }
 }

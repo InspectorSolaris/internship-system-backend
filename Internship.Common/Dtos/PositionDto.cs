@@ -12,10 +12,10 @@ namespace Internship.Common.Dtos
 
         public Guid CompanyId { get; set; }
 
-        public ICollection<Guid> Interviews { get; set; }
+        public IEnumerable<Guid> Interviews { get; set; }
 
-        public ICollection<Guid> Priorities { get; set; }
+        public IEnumerable<Guid> Priorities { get; set; }
 
-        public ICollection<Guid> Assessments { get; set; }
+        public IEnumerable<Guid> Assessments { get; set; }
     }
 }

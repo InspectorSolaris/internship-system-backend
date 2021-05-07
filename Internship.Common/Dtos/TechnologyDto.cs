@@ -13,6 +13,6 @@ namespace Internship.Common.Dtos
 
         public Guid SpecializationId { get; set; }
 
-        public ICollection<Guid> Users { get; set; }
+        public IEnumerable<Guid> Users { get; set; }
     }
 }

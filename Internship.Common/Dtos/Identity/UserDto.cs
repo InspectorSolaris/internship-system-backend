@@ -19,8 +19,8 @@ namespace Internship.Common.Dtos.Identity
         [StringLength(1024)]
         public string Info { get; set; }
 
-        public ICollection<Guid> Specializations { get; set; }
+        public IEnumerable<Guid> Specializations { get; set; }
 
-        public ICollection<Guid> Technologies { get; set; }
+        public IEnumerable<Guid> Technologies { get; set; }
     }
 }

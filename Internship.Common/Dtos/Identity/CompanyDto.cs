@@ -5,6 +5,6 @@ namespace Internship.Common.Dtos.Identity
 {
     public class CompanyDto : UserDto
     {
-        public ICollection<Guid> Positions { get; set; }
+        public IEnumerable<Guid> Positions { get; set; }
     }
 }
