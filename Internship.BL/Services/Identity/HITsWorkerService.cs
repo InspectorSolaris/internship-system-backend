@@ -13,7 +13,7 @@ namespace Internship.BL.Services.Identity
         public HITsWorkerService(
             InternshipDbContext context,
             UserManager<HITsWorker> userManager,
-            RoleManager<HITsWorker> roleManager)
+            RoleManager<Role> roleManager)
             : base(context, userManager, roleManager)
         {
         }
