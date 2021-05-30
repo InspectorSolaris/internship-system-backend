@@ -8,7 +8,7 @@ namespace Internship.BL.Interfaces.Identity
     public interface IUserService<TUserDto>
         where TUserDto : UserDto
     {
-        Task Create(TUserDto userDto);
+        Task<Guid> Create(TUserDto userDto);
 
         Task<IEnumerable<TUserDto>> Retrieve();
 

@@ -44,7 +44,7 @@ namespace Internship.Web.Controllers.Identity
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TUserDto>> Get(Guid id)
+        public async Task<ActionResult<TUserDto>> Get([FromRoute] Guid id)
         {
             try
             {
@@ -63,8 +63,8 @@ namespace Internship.Web.Controllers.Identity
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<TUserDto>> Put(TUserDto userDto)
+        [HttpPut]
+        public async Task<ActionResult<TUserDto>> Put([FromBody] TUserDto userDto)
         {
             try
             {
@@ -86,13 +86,13 @@ namespace Internship.Web.Controllers.Identity
         }
 
         [HttpPost]
-        public async Task<ActionResult<TUserDto>> Post(TUserDto userDto)
+        public async Task<ActionResult<TUserDto>> Post([FromBody] TUserDto userDto)
         {
             try
             {
-                await _userService.Create(userDto);
+                var userId = await _userService.Create(userDto);
 
-                return await _userService.Retrieve(userDto.Id);
+                return await _userService.Retrieve(userId);
             }
             catch (Exception e)
             {
@@ -103,7 +103,7 @@ namespace Internship.Web.Controllers.Identity
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             try
             {

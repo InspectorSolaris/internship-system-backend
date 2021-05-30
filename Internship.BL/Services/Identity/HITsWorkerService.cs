@@ -20,7 +20,9 @@ namespace Internship.BL.Services.Identity
 
         protected override DbSet<HITsWorker> DbSet => _context.HITsWorkers;
 
-        protected override IQueryable<HITsWorker> Query => _context.HITsWorkers;
+        protected override IQueryable<HITsWorker> Query => _context.HITsWorkers
+            .Include(user => user.Specializations)
+            .Include(user => user.Technologies);
 
         protected override HITsWorkerDto GetDto(HITsWorker user)
         {

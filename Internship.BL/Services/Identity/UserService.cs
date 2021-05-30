@@ -37,15 +37,17 @@ namespace Internship.BL.Services.Identity
 
         protected virtual TUserDto GetDto(TUser user)
         {
-            return new TUserDto()
-            {
-                Id = user.Id,
-                UserName = user.UserName,
-                Email = user.Email,
-                Info = user.Info,
-                Specializations = user.Specializations.Select(entity => entity.Id),
-                Technologies = user.Technologies.Select(entity => entity.Id)
-            };
+            return user == null ?
+                null :
+                new TUserDto()
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Info = user.Info,
+                    Specializations = user.Specializations.Select(entity => entity.Id),
+                    Technologies = user.Technologies.Select(entity => entity.Id)
+                };
         }
 
         protected async virtual Task Update(TUser user, TUserDto userDto)
@@ -57,7 +59,7 @@ namespace Internship.BL.Services.Identity
             user.Technologies = await _context.Technologies.Where(entity => userDto.Specializations.Contains(entity.Id)).ToListAsync();
         }
 
-        public async virtual Task Create(TUserDto userDto)
+        public async virtual Task<Guid> Create(TUserDto userDto)
         {
             var user = new TUser()
             {
@@ -69,13 +71,17 @@ namespace Internship.BL.Services.Identity
             DbSet.Add(user);
 
             await _context.SaveChangesAsync();
+
+            return user.Id;
         }
 
         public async virtual Task<IEnumerable<TUserDto>> Retrieve()
         {
-            return await Query
+            var users = await Query.ToListAsync();
+
+            return users
                 .Select(user => GetDto(user))
-                .ToListAsync();
+                .ToList();
         }
 
         public async virtual Task<TUserDto> Retrieve(Guid id)
