@@ -1,22 +1,23 @@
 ﻿using Internship.Common.Dtos.Common;
-using Internship.DAL.Models.Common;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Internship.BL.Interfaces.Common
 {
-    public interface IEntityService<TEntity, TEntityDto>
-        where TEntity : Entity
+    public interface IEntityService<TEntityDto>
         where TEntityDto : EntityDto
     {
-        void Create(TEntityDto entityDto);
+        Task<Guid> Create(TEntityDto entityDto);
 
-        IEnumerable<TEntityDto> Retrieve();
+        Task<IEnumerable<TEntityDto>> Retrieve();
 
-        TEntityDto Retrieve(Guid id);
+        Task<TEntityDto> Retrieve(Guid id);
 
-        void Update(TEntityDto entityDto);
+        Task Update(TEntityDto entityDto);
 
-        void Delete(Guid id);
+        Task Delete(Guid id);
+
+        Task<bool> Exists(Guid id);
     }
 }
