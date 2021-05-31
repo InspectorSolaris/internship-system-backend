@@ -36,12 +36,15 @@ namespace Internship.BL.Services.Data
                 UserId = fileDto.UserId,
                 Name = fileDto.Name,
                 Extension = fileDto.Extension,
+                CreatedAt = fileDto.CreatedAt,
                 Length = fileDto.Length
             };
 
             var filePath = GetFilePath(file);
 
-            fileDto.Stream.CopyTo(System.IO.File.Create(filePath));
+            using var fileStream = System.IO.File.OpenWrite(filePath);
+
+            await fileStream.WriteAsync(fileDto.Content.AsMemory(0, fileDto.Content.Length));
 
             await _context.AddAsync(file);
             await _context.SaveChangesAsync();
@@ -66,7 +69,7 @@ namespace Internship.BL.Services.Data
                 return null;
             }
 
-            var fileStream = System.IO.File.OpenRead(filePath);
+            using var fileStream = System.IO.File.OpenRead(filePath);
 
             return new FileDto()
             {
@@ -74,8 +77,9 @@ namespace Internship.BL.Services.Data
                 UserId = file.UserId,
                 Name = file.Name,
                 Extension = file.Extension,
+                CreatedAt = file.CreatedAt,
                 Length = file.Length,
-                Stream = fileStream
+                Content = await GetBytes(fileStream)
             };
         }
 
@@ -91,7 +95,9 @@ namespace Internship.BL.Services.Data
 
             var filePath = GetFilePath(file);
 
-            fileDto.Stream.CopyTo(System.IO.File.Create(filePath));
+            using var fileStream = System.IO.File.OpenWrite(filePath);
+
+            await fileStream.WriteAsync(fileDto.Content.AsMemory(0, fileDto.Content.Length));
         }
 
         public async Task Delete(Guid id)
@@ -114,9 +120,18 @@ namespace Internship.BL.Services.Data
             return await _context.Files.AnyAsync(file => file.Id == id);
         }
 
+        public async Task<byte[]> GetBytes(System.IO.Stream stream)
+        {
+            using var memoryStream = new System.IO.MemoryStream();
+
+            await stream.CopyToAsync(memoryStream);
+
+            return memoryStream.ToArray();
+        }
+
         private string GetFilePath(File file)
         {
-            return System.IO.Path.Combine(_hostEnvironment.ContentRootPath, _configuration["Storage:Data"], $"{file.Name}{file.Extension}");
+            return System.IO.Path.Combine(_hostEnvironment.ContentRootPath, _configuration["Storage:Data"], file.FullName);
         }
     }
 }

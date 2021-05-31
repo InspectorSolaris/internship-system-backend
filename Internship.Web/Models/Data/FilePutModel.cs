@@ -8,7 +8,5 @@ namespace Internship.Web.Models.Data
         public Guid Id { get; set; }
 
         public Guid UserId { get; set; }
-
-        public IFormFile FormFile { get; set; }
     }
 }

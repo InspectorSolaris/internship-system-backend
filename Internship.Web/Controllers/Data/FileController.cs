@@ -1,11 +1,11 @@
 ﻿using Internship.BL.Interfaces.Data;
 using Internship.Common.Dtos.Data;
-using Internship.Web.Models.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Logging;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Internship.Web.Controllers.Data
@@ -20,7 +20,7 @@ namespace Internship.Web.Controllers.Data
 
         private readonly IContentTypeProvider _contentTypeProvider;
 
-        protected FileController(
+        public FileController(
             ILogger<FileDto> logger,
             IFileService fileService,
             IContentTypeProvider contentTypeProvider)
@@ -50,19 +50,25 @@ namespace Internship.Web.Controllers.Data
             }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Put([FromBody] FilePutModel filePutModel)
+        [HttpPut("{userId}/{id}")]
+        public async Task<IActionResult> Put(
+            [FromRoute] Guid userId,
+            [FromRoute] Guid id,
+            IFormFile formFile)
         {
             try
             {
+                using var fileStream = formFile.OpenReadStream();
+
                 var fileDto = new FileDto()
                 {
-                    Id = filePutModel.Id,
-                    UserId = filePutModel.UserId,
-                    Name = filePutModel.FormFile.FileName,
-                    Extension = filePutModel.FormFile.ContentType,
-                    Length = filePutModel.FormFile.Length,
-                    Stream = filePutModel.FormFile.OpenReadStream()
+                    Id = id,
+                    UserId = userId,
+                    Name = Path.GetFileNameWithoutExtension(formFile.FileName),
+                    Extension = Path.GetExtension(formFile.FileName),
+                    CreatedAt = DateTimeOffset.UtcNow,
+                    Length = formFile.Length,
+                    Content = await _fileService.GetBytes(fileStream)
                 };
 
                 if (!await _fileService.Exists(fileDto.Id))
@@ -82,18 +88,23 @@ namespace Internship.Web.Controllers.Data
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] FilePostModel filePostModel)
+        [HttpPost("{userId}")]
+        public async Task<IActionResult> Post(
+            [FromRoute] Guid userId,
+            IFormFile formFile)
         {
             try
             {
+                using var fileStream = formFile.OpenReadStream();
+
                 var fileDto = new FileDto()
                 {
-                    UserId = filePostModel.UserId,
-                    Name = filePostModel.FormFile.FileName,
-                    Extension = filePostModel.FormFile.ContentType,
-                    Length = filePostModel.FormFile.Length,
-                    Stream = filePostModel.FormFile.OpenReadStream()
+                    UserId = userId,
+                    Name = Path.GetFileNameWithoutExtension(formFile.FileName),
+                    Extension = Path.GetExtension(formFile.FileName),
+                    CreatedAt = DateTimeOffset.UtcNow,
+                    Length = formFile.Length,
+                    Content = await _fileService.GetBytes(fileStream)
                 };
 
                 var fileId = await _fileService.Create(fileDto);
@@ -134,7 +145,7 @@ namespace Internship.Web.Controllers.Data
                 contentType = "application/octet-stream";
             }
 
-            return File(fileDto.Stream, contentType);
+            return File(fileDto.Content, contentType, fileDto.FullName);
         }
     }
 }

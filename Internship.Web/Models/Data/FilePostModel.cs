@@ -6,7 +6,5 @@ namespace Internship.Web.Models.Data
     public class FilePostModel
     {
         public Guid UserId { get; set; }
-
-        public IFormFile FormFile { get; set; }
     }
 }

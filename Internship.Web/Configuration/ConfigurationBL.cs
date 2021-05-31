@@ -1,6 +1,8 @@
 ﻿using Internship.BL.Interfaces.Common;
+using Internship.BL.Interfaces.Data;
 using Internship.BL.Interfaces.Identity;
 using Internship.BL.Services;
+using Internship.BL.Services.Data;
 using Internship.BL.Services.Identity;
 using Internship.Common.Dtos;
 using Internship.Common.Dtos.Identity;
@@ -16,6 +18,7 @@ namespace Internship.Web.Configuration
             serviceCollection.AddScoped<IUserService<StudentDto>, StudentService>();
             serviceCollection.AddScoped<IUserService<HITsWorkerDto>, HITsWorkerService>();
             serviceCollection.AddScoped<IUserService<CompanyDto>, CompanyService>();
+            serviceCollection.AddScoped<IFileService, FileService>();
 
             serviceCollection.AddScoped<IEntityService<DocumentDto>, DocumentService>();
             serviceCollection.AddScoped<IEntityService<InternshipAssessmentDto>, InternshipAssessmentService>();

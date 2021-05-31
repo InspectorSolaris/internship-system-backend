@@ -1,6 +1,4 @@
-﻿using Internship.Common.Dtos.Identity;
-using System;
-using System.IO;
+﻿using System;
 
 namespace Internship.Common.Dtos.Data
 {
@@ -14,8 +12,15 @@ namespace Internship.Common.Dtos.Data
 
         public string Extension { get; set; }
 
+        public DateTimeOffset CreatedAt { get; set; }
+
         public long Length { get; set; }
 
-        public Stream Stream { get; set; }
+        public byte[] Content { get; set; }
+
+        public string FullName
+        {
+            get => $"{Name}({CreatedAt:yyyy-MM-dd-HH-mm-ss}){Extension}";
+        }
     }
 }

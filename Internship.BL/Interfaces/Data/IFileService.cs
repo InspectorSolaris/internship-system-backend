@@ -1,5 +1,6 @@
 ﻿using Internship.Common.Dtos.Data;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Internship.BL.Interfaces.Data
@@ -15,5 +16,7 @@ namespace Internship.BL.Interfaces.Data
         Task Delete(Guid id);
 
         Task<bool> Exists(Guid id);
+
+        Task<byte[]> GetBytes(Stream stream);
     }
 }
