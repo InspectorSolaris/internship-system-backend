@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Internship.DAL.Models.Data;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,5 +14,7 @@ namespace Internship.DAL.Models.Identity
         public ICollection<Specialization> Specializations { get; set; }
 
         public ICollection<Technology> Technologies { get; set; }
+
+        public ICollection<File> Files { get; set; }
     }
 }

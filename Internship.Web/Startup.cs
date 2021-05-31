@@ -1,6 +1,7 @@
 using Internship.Web.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,6 +26,8 @@ namespace Internship.Web
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "InternshipSystemBackend", Version = "v1" });
             });
+
+            services.AddScoped<IContentTypeProvider, FileExtensionContentTypeProvider>();
 
             services.ConfigureDAL(_configuration);
             services.ConfigureBL(_configuration);

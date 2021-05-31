@@ -1,4 +1,5 @@
 ﻿using Internship.DAL.Models;
+using Internship.DAL.Models.Data;
 using Internship.DAL.Models.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,8 @@ namespace Internship.DAL.Context
         public DbSet<Company> Companies { get; set; }
 
         public DbSet<HITsWorker> HITsWorkers { get; set; }
+
+        public DbSet<File> Files { get; set; }
 
         public DbSet<Position> Positions { get; set; }
 
