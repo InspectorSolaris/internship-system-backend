@@ -22,5 +22,7 @@ namespace Internship.Common.Dtos.Identity
         public IEnumerable<Guid> Specializations { get; set; }
 
         public IEnumerable<Guid> Technologies { get; set; }
+
+        public IEnumerable<Guid> Files { get; set; }
     }
 }

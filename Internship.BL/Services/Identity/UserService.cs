@@ -46,7 +46,8 @@ namespace Internship.BL.Services.Identity
                     Email = user.Email,
                     Info = user.Info,
                     Specializations = user.Specializations.Select(entity => entity.Id),
-                    Technologies = user.Technologies.Select(entity => entity.Id)
+                    Technologies = user.Technologies.Select(entity => entity.Id),
+                    Files = user.Files.Select(file => file.Id)
                 };
         }
 
@@ -56,7 +57,8 @@ namespace Internship.BL.Services.Identity
             user.Email = userDto.Email;
             user.Info = userDto.Info;
             user.Specializations = await _context.Specializations.Where(entity => userDto.Specializations.Contains(entity.Id)).ToListAsync();
-            user.Technologies = await _context.Technologies.Where(entity => userDto.Specializations.Contains(entity.Id)).ToListAsync();
+            user.Technologies = await _context.Technologies.Where(entity => userDto.Technologies.Contains(entity.Id)).ToListAsync();
+            user.Files = await _context.Files.Where(file => userDto.Files.Contains(file.Id)).ToListAsync();
         }
 
         public async virtual Task<Guid> Create(TUserDto userDto)
