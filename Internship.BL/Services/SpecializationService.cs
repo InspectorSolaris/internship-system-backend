@@ -19,8 +19,7 @@ namespace Internship.BL.Services
         protected override DbSet<Specialization> DbSet => _context.Specializations;
 
         protected override IQueryable<Specialization> Query => _context.Specializations
-            .Include(entity => entity.Users)
-            .Include(entity => entity.Technologies);
+            .Include(entity => entity.Users);
 
         protected override SpecializationDto GetDto(Specialization entity)
         {
@@ -28,7 +27,6 @@ namespace Internship.BL.Services
 
             entityDto.Name = entity.Name;
             entityDto.Users = entity.Users.Select(user => user.Id);
-            entityDto.Technologies = entity.Technologies.Select(entity => entity.Id);
 
             return entityDto;
         }
@@ -39,7 +37,6 @@ namespace Internship.BL.Services
 
             entity.Name = entityDto.Name;
             entity.Users = await _context.Users.Where(user => entityDto.Users.Contains(user.Id)).ToListAsync();
-            entity.Technologies = await _context.Technologies.Where(entity => entityDto.Technologies.Contains(entity.Id)).ToListAsync();
         }
     }
 }

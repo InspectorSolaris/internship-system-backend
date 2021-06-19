@@ -26,7 +26,6 @@ namespace Internship.BL.Services
             var entityDto = base.GetDto(entity);
 
             entityDto.Name = entity.Name;
-            entityDto.SpecializationId = entity.SpecializationId;
             entityDto.Users = entity.Users.Select(user => user.Id);
 
             return entityDto;
@@ -37,7 +36,6 @@ namespace Internship.BL.Services
             await base.Update(entity, entityDto);
 
             entity.Name = entityDto.Name;
-            entity.SpecializationId = entityDto.SpecializationId;
             entity.Users = await _context.Users.Where(user => entityDto.Users.Contains(user.Id)).ToListAsync();
         }
     }

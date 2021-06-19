@@ -12,7 +12,5 @@ namespace Internship.Common.Dtos
         public string Name { get; set; }
 
         public IEnumerable<Guid> Users { get; set; }
-
-        public IEnumerable<Guid> Technologies { get; set; }
     }
 }

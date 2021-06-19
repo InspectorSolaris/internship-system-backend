@@ -7,14 +7,16 @@ namespace Internship.DAL.Models
 {
     public class Interview : Entity
     {
-        public InterviewResult Result { get; set; }
+        public DateTimeOffset? Date { get; set; }
+
+        public InterviewState State { get; set; }
 
         public Guid StudentId { get; set; }
 
         public Student Student { get; set; }
 
-        public Guid CompanyId { get; set; }
+        public Guid PositionId { get; set; }
 
-        public Company Company { get; set; }
+        public Position Position { get; set; }
     }
 }

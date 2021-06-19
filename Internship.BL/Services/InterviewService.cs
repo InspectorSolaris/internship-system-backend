@@ -24,8 +24,9 @@ namespace Internship.BL.Services
         {
             var entityDto = base.GetDto(entity);
 
+            entityDto.Date = entity.Date;
             entityDto.StudentId = entity.StudentId;
-            entityDto.CompanyId = entity.CompanyId;
+            entityDto.PositionId = entity.PositionId;
 
             return entityDto;
         }
@@ -34,8 +35,9 @@ namespace Internship.BL.Services
         {
             await base.Update(entity, entityDto);
 
+            entity.Date = entityDto.Date;
             entity.StudentId = entityDto.StudentId;
-            entity.CompanyId = entityDto.CompanyId;
+            entity.PositionId = entityDto.PositionId;
         }
     }
 }

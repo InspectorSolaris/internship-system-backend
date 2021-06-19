@@ -11,6 +11,8 @@ namespace Internship.DAL.Models
 
         public int Year { get; set; }
 
+        public string Name { get; set; }
+
         public Guid CompanyId { get; set; }
 
         public Company Company { get; set; }

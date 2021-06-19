@@ -12,7 +12,5 @@ namespace Internship.DAL.Models
         public string Name { get; set; }
 
         public ICollection<User> Users { get; set; }
-
-        public ICollection<Technology> Technologies { get; set; }
     }
 }

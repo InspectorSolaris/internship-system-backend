@@ -11,8 +11,6 @@ namespace Internship.Common.Dtos
         [StringLength(64, MinimumLength = 2)]
         public string Name { get; set; }
 
-        public Guid SpecializationId { get; set; }
-
         public IEnumerable<Guid> Users { get; set; }
     }
 }

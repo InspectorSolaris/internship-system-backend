@@ -29,6 +29,7 @@ namespace Internship.BL.Services
 
             entityDto.StudentsAmount = entity.StudentsAmount;
             entityDto.Year = entity.Year;
+            entityDto.Name = entity.Name;
             entityDto.CompanyId = entity.CompanyId;
             entityDto.Interviews = entity.Interviews.Select(entity => entity.Id);
             entityDto.Priorities = entity.Priorities.Select(entity => entity.Id);
@@ -43,6 +44,7 @@ namespace Internship.BL.Services
 
             entity.StudentsAmount = entityDto.StudentsAmount;
             entity.Year = entityDto.Year;
+            entity.Name = entityDto.Name;
             entity.CompanyId = entityDto.CompanyId;
             entity.Interviews = await _context.Interviews.Where(entity => entityDto.Interviews.Contains(entity.Id)).ToListAsync();
             entity.Priorities = await _context.PriorityCompanies.Where(entity => entityDto.Priorities.Contains(entity.Id)).ToListAsync();
