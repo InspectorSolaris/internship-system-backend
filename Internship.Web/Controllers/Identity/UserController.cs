@@ -1,29 +1,83 @@
 ﻿using Internship.BL.Interfaces.Identity;
 using Internship.Common.Dtos.Identity;
+using Internship.DAL.Models.Identity;
+using Internship.Web.Configuration;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 
 namespace Internship.Web.Controllers.Identity
 {
     [Route("api/[controller]")]
     [ApiController]
-    public abstract class UserController<TUserDto> : ControllerBase
+    public abstract class UserController<TUser, TUserDto> : ControllerBase
+        where TUser : User
         where TUserDto : UserDto
     {
         private readonly ILogger<TUserDto> _logger;
 
         private readonly IUserService<TUserDto> _userService;
 
+        private readonly UserManager<TUser> _userManager;
+
         protected UserController(
             ILogger<TUserDto> logger,
-            IUserService<TUserDto> userService)
+            IUserService<TUserDto> userService,
+            UserManager<TUser> userManager)
         {
             _logger = logger;
             _userService = userService;
+            _userManager = userManager;
+        }
+
+        [HttpPost("SignIn")]
+        public async Task<IActionResult> SignIn(string name, string password)
+        {
+            try
+            {
+                var user = await _userManager.FindByNameAsync(name);
+
+                if (user == null)
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest);
+                }
+
+                var valid = await _userManager.CheckPasswordAsync(user, password);
+
+                if (!valid)
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest);
+                }
+
+                var utcNow = DateTime.UtcNow;
+                var claims = await _userManager.GetClaimsAsync(user);
+                var jwt = new JwtSecurityToken(
+                        issuer: AuthenticationConfiguration.Issuer,
+                        audience: AuthenticationConfiguration.Audience,
+                        notBefore: utcNow,
+                        claims: claims,
+                        expires: utcNow.Add(TimeSpan.FromMinutes(AuthenticationConfiguration.Lifetime)),
+                        signingCredentials: new SigningCredentials(AuthenticationConfiguration.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+
+                return new JsonResult(new
+                {
+                    AccessToken = new JwtSecurityTokenHandler().WriteToken(jwt),
+                    Name = user.UserName,
+                    Role = user.GetType().Name
+                });
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "");
+
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
         }
 
         [HttpGet]

@@ -27,7 +27,7 @@ namespace Internship.Web.Controllers
             {
                 var entities = await _entityService
                     .Retrieve()
-                    .ContinueWith(task => task.Result.Where(x => x.StudentId == studentId));
+                    .ContinueWith(task => task.Result.Where(entity => entity.StudentId == studentId));
 
                 return new ActionResult<IEnumerable<InterviewDto>>(entities);
             }
@@ -46,7 +46,7 @@ namespace Internship.Web.Controllers
             {
                 var entities = await _entityService
                     .Retrieve()
-                    .ContinueWith(task => task.Result.Where(x => x.PositionId == positionId));
+                    .ContinueWith(task => task.Result.Where(entity => entity.PositionId == positionId));
 
                 return new ActionResult<IEnumerable<InterviewDto>>(entities);
             }
