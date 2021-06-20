@@ -20,7 +20,7 @@ namespace Internship.Web.Controllers
         {
         }
 
-        [HttpGet]
+        [HttpGet("GetByStudent/{studentId}")]
         public async Task<ActionResult<IEnumerable<InterviewDto>>> GetByStudent(Guid studentId)
         {
             try
@@ -39,7 +39,7 @@ namespace Internship.Web.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("GetByPosition/{studentId}")]
         public async Task<ActionResult<IEnumerable<InterviewDto>>> GetByPosition(Guid positionId)
         {
             try
