@@ -52,6 +52,12 @@ namespace Internship.Web
 
             app.UseRouting();
 
+            app.UseCors(builder => builder
+                .WithOrigins("http://localhost:4200", "http://194.87.69.217:4000")
+                .AllowCredentials()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
             app.UseAuthentication();
             app.UseAuthorization();
 

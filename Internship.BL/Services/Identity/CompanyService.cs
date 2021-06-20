@@ -23,6 +23,7 @@ namespace Internship.BL.Services.Identity
         protected override IQueryable<Company> Query => _context.Companies
             .Include(user => user.Specializations)
             .Include(user => user.Technologies)
+            .Include(user => user.Files)
             .Include(user => user.Positions);
 
         protected override CompanyDto GetDto(Company user)

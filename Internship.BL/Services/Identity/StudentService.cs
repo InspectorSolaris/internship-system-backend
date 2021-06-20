@@ -23,6 +23,7 @@ namespace Internship.BL.Services.Identity
         protected override IQueryable<Student> Query => _context.Students
             .Include(user => user.Specializations)
             .Include(user => user.Technologies)
+            .Include(user => user.Files)
             .Include(user => user.Interviews)
             .Include(user => user.Priorities)
             .Include(user => user.SubjectInstances)

@@ -22,7 +22,8 @@ namespace Internship.BL.Services.Identity
 
         protected override IQueryable<HITsWorker> Query => _context.HITsWorkers
             .Include(user => user.Specializations)
-            .Include(user => user.Technologies);
+            .Include(user => user.Technologies)
+            .Include(user => user.Files);
 
         protected override HITsWorkerDto GetDto(HITsWorker user)
         {

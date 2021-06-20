@@ -23,7 +23,7 @@ namespace Internship.DAL.Models.Data
         [NotMapped]
         public string FullName
         {
-            get => $"{Name}({CreatedAt:yyyy-MM-dd-HH-mm-ss}){Extension}";
+            get => $"{Name}({CreatedAt.UtcDateTime:yyyy-MM-dd-HH-mm-ss}){Extension}";
         }
     }
 }
