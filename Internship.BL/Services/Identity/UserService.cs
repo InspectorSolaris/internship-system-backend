@@ -96,7 +96,7 @@ namespace Internship.BL.Services.Identity
 
         public async virtual Task Update(TUserDto userDto)
         {
-            var user = await DbSet
+            var user = await Query
                 .FirstOrDefaultAsync(user => user.Id == userDto.Id);
 
             await Update(user, userDto);
