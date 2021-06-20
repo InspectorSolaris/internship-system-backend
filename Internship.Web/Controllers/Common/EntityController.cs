@@ -14,9 +14,9 @@ namespace Internship.Web.Controllers.Common
     public abstract class EntityController<TEntityDto> : ControllerBase
         where TEntityDto : EntityDto
     {
-        private readonly ILogger<TEntityDto> _logger;
+        protected readonly ILogger<TEntityDto> _logger;
 
-        private readonly IEntityService<TEntityDto> _entityService;
+        protected readonly IEntityService<TEntityDto> _entityService;
 
         protected EntityController(
             ILogger<TEntityDto> logger,
