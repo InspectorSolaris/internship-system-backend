@@ -6,7 +6,7 @@ namespace Internship.Web.Configuration
 {
     public static class IdentityConfiguration
     {
-        public static async Task Seed<TUser, TRole>(UserManager<TUser> userManager, RoleManager<TRole> roleManager, string namePostfix)
+        public static async Task Seed<TUser, TRole>(UserManager<TUser> userManager, RoleManager<TRole> roleManager, string role)
             where TUser : User, new()
             where TRole : Role, new()
         {
@@ -16,9 +16,9 @@ namespace Internship.Web.Configuration
             {
                 await userManager.CreateAsync(new TUser()
                 {
-                    UserName = $"Admin{namePostfix}",
+                    UserName = $"Admin{role}",
                     Email = "admin_email@mail.com"
-                }, $"Password{namePostfix}");
+                }, $"Password{role}");
             }
 
             var adminRole = await roleManager.FindByNameAsync("Admin");
@@ -31,13 +31,26 @@ namespace Internship.Web.Configuration
                 });
             }
 
-            adminUser = await userManager.FindByNameAsync($"Admin{namePostfix}");
+            if (await roleManager.FindByNameAsync(role) == null)
+            {
+                await roleManager.CreateAsync(new TRole()
+                {
+                    Name = role
+                });
+            }
+
+            adminUser = await userManager.FindByNameAsync($"Admin{role}");
 
             var adminUserRoles = await userManager.GetRolesAsync(adminUser);
 
             if (!adminUserRoles.Contains("Admin"))
             {
                 await userManager.AddToRoleAsync(adminUser, "Admin");
+            }
+
+            if (!adminUserRoles.Contains(role))
+            {
+                await userManager.AddToRoleAsync(adminUser, role);
             }
         }
     }
