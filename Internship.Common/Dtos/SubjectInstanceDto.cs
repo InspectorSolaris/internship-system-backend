@@ -8,6 +8,8 @@ namespace Internship.Common.Dtos
     {
         public int Year { get; set; }
 
+        public Guid SubjectId { get; set; }
+
         public IEnumerable<Guid> Students { get; set; }
     }
 }

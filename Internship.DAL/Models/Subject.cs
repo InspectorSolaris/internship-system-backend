@@ -1,4 +1,5 @@
 ﻿using Internship.DAL.Models.Common;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Internship.DAL.Models
@@ -8,5 +9,7 @@ namespace Internship.DAL.Models
         [Required]
         [StringLength(64, MinimumLength = 2)]
         public string Name { get; set; }
+
+        public ICollection<SubjectInstance> SubjecInstances { get; set; }
     }
 }
