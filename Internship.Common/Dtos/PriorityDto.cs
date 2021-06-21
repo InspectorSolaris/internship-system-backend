@@ -9,6 +9,6 @@ namespace Internship.Common.Dtos
 
         public Guid StudentId { get; set; }
 
-        public Guid PriorityId { get; set; }
+        public Guid PositionId { get; set; }
     }
 }
