@@ -112,6 +112,7 @@ namespace Internship.Web.Controllers.Identity
                 return new JsonResult(new
                 {
                     AccessToken = accessToken,
+                    Id = user.Id,
                     Name = user.UserName,
                     Roles = await _userManager.GetRolesAsync(user)
                 });
