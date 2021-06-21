@@ -6,9 +6,11 @@ namespace Internship.DAL.Models
 {
     public class SubjectAssessment : Entity
     {
-        public Guid SubjectId { get; set; }
+        public int Value { get; set; }
 
-        public Subject Subject { get; set; }
+        public Guid SubjectInstanceId { get; set; }
+
+        public SubjectInstance SubjectInstance { get; set; }
 
         public Guid StudentId { get; set; }
 

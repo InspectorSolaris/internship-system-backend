@@ -3,15 +3,17 @@ using System;
 using Internship.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Internship.DAL.Migrations
 {
     [DbContext(typeof(InternshipDbContext))]
-    partial class InternshipDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210621154216_AddSubjectAssessmentValue")]
+    partial class AddSubjectAssessmentValue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -346,7 +348,7 @@ namespace Internship.DAL.Migrations
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("SubjectInstanceId")
+                    b.Property<Guid>("SubjectId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Value")
@@ -356,7 +358,7 @@ namespace Internship.DAL.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.HasIndex("SubjectInstanceId");
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("SubjectAssessments");
                 });
@@ -701,15 +703,15 @@ namespace Internship.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Internship.DAL.Models.SubjectInstance", "SubjectInstance")
+                    b.HasOne("Internship.DAL.Models.Subject", "Subject")
                         .WithMany()
-                        .HasForeignKey("SubjectInstanceId")
+                        .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Student");
 
-                    b.Navigation("SubjectInstance");
+                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

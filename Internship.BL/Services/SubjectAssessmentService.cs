@@ -24,7 +24,8 @@ namespace Internship.BL.Services
         {
             var entityDto = base.GetDto(entity);
 
-            entityDto.SubjectId = entity.SubjectId;
+            entityDto.Value = entity.Value;
+            entityDto.SubjectInstanceId = entity.SubjectInstanceId;
             entityDto.StudentId = entity.StudentId;
 
             return entityDto;
@@ -34,7 +35,8 @@ namespace Internship.BL.Services
         {
             await base.Update(entity, entityDto);
 
-            entity.SubjectId = entityDto.SubjectId;
+            entity.Value = entityDto.Value;
+            entity.SubjectInstanceId = entityDto.SubjectInstanceId;
             entity.StudentId = entityDto.StudentId;
         }
     }

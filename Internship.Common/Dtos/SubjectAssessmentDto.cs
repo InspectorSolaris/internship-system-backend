@@ -5,7 +5,9 @@ namespace Internship.Common.Dtos
 {
     public class SubjectAssessmentDto : EntityDto
     {
-        public Guid SubjectId { get; set; }
+        public int Value { get; set; }
+
+        public Guid SubjectInstanceId { get; set; }
 
         public Guid StudentId { get; set; }
     }
