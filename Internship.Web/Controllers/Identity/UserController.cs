@@ -2,6 +2,7 @@
 using Internship.Common.Dtos.Identity;
 using Internship.DAL.Models.Identity;
 using Internship.Web.Configuration;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -69,7 +70,7 @@ namespace Internship.Web.Controllers.Identity
                 {
                     AccessToken = new JwtSecurityTokenHandler().WriteToken(jwt),
                     Name = user.UserName,
-                    Role = user.GetType().Name
+                    Roles = await _userManager.GetRolesAsync(user)
                 });
             }
             catch (Exception e)

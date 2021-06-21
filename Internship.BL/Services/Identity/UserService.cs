@@ -35,6 +35,8 @@ namespace Internship.BL.Services.Identity
 
         protected abstract IQueryable<TUser> Query { get; }
 
+        protected abstract string UserRole { get; }
+
         protected virtual TUserDto GetDto(TUser user)
         {
             return user == null ?
@@ -70,9 +72,14 @@ namespace Internship.BL.Services.Identity
 
             await Update(user, userDto);
 
-            DbSet.Add(user);
+            await _userManager.CreateAsync(user, userDto.Password);
 
-            await _context.SaveChangesAsync();
+            if (!await _roleManager.RoleExistsAsync(UserRole))
+            {
+                await _roleManager.CreateAsync(new Role(UserRole));
+            }
+
+            await _userManager.AddToRoleAsync(user, UserRole);
 
             return user.Id;
         }
@@ -109,7 +116,7 @@ namespace Internship.BL.Services.Identity
             var user = await DbSet
                 .FirstOrDefaultAsync(user => user.Id == id);
 
-            DbSet.Remove(user);
+            await _userManager.DeleteAsync(user);
 
             await _context.SaveChangesAsync();
         }

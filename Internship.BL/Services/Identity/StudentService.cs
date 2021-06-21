@@ -30,6 +30,8 @@ namespace Internship.BL.Services.Identity
             .Include(user => user.SubjectAssessments)
             .Include(user => user.InternshipAssessments);
 
+        protected override string UserRole => "Student";
+
         protected override StudentDto GetDto(Student user)
         {
             var userDto = base.GetDto(user);

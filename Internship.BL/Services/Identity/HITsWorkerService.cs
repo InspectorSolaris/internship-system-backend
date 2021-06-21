@@ -25,6 +25,8 @@ namespace Internship.BL.Services.Identity
             .Include(user => user.Technologies)
             .Include(user => user.Files);
 
+        protected override string UserRole => "Student";
+
         protected override HITsWorkerDto GetDto(HITsWorker user)
         {
             var userDto = base.GetDto(user);

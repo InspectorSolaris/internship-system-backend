@@ -19,6 +19,10 @@ namespace Internship.Common.Dtos.Identity
         [StringLength(1024)]
         public string Info { get; set; }
 
+        [Required]
+        [StringLength(64, MinimumLength = 4)]
+        public string Password { get; set; }
+
         public IEnumerable<Guid> Specializations { get; set; }
 
         public IEnumerable<Guid> Technologies { get; set; }

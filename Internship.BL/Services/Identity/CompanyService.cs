@@ -26,6 +26,8 @@ namespace Internship.BL.Services.Identity
             .Include(user => user.Files)
             .Include(user => user.Positions);
 
+        protected override string UserRole => "Company";
+
         protected override CompanyDto GetDto(Company user)
         {
             var userDto = base.GetDto(user);
