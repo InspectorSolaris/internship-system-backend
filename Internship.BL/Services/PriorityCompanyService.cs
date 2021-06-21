@@ -26,7 +26,7 @@ namespace Internship.BL.Services
 
             entityDto.Value = entity.Value;
             entityDto.StudentId = entity.StudentId;
-            entityDto.CompanyId = entity.CompanyId;
+            entityDto.PriorityId = entity.PositionId;
 
             return entityDto;
         }
@@ -37,7 +37,7 @@ namespace Internship.BL.Services
 
             entity.Value = entityDto.Value;
             entity.StudentId = entityDto.StudentId;
-            entity.CompanyId = entityDto.CompanyId;
+            entity.PositionId = entityDto.PriorityId;
         }
     }
 }

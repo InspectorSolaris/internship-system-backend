@@ -14,8 +14,8 @@ namespace Internship.DAL.Models
 
         public Student Student { get; set; }
 
-        public Guid CompanyId { get; set; }
+        public Guid PositionId { get; set; }
 
-        public Company Company { get; set; }
+        public Position Position { get; set; }
     }
 }
