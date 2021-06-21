@@ -1,11 +1,13 @@
 ﻿using Internship.BL.Interfaces.Identity;
 using Internship.Common.Dtos.Identity;
+using Internship.Common.Enums;
 using Internship.DAL.Models.Identity;
 using Internship.Web.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -21,6 +23,8 @@ namespace Internship.Web.Controllers.Identity
         where TUser : User
         where TUserDto : UserDto
     {
+        private readonly IMemoryCache _cache;
+
         private readonly ILogger<TUserDto> _logger;
 
         private readonly IUserService<TUserDto> _userService;
@@ -28,13 +32,48 @@ namespace Internship.Web.Controllers.Identity
         private readonly UserManager<TUser> _userManager;
 
         protected UserController(
+            IMemoryCache cache,
             ILogger<TUserDto> logger,
             IUserService<TUserDto> userService,
             UserManager<TUser> userManager)
         {
+            _cache = cache;
             _logger = logger;
             _userService = userService;
             _userManager = userManager;
+        }
+
+        [HttpGet("ValidateToken")]
+        public async Task<IActionResult> ValidateToken(string name)
+        {
+            try
+            {
+                var user = await _userManager.FindByNameAsync(name);
+
+                if (user != null && _cache.TryGetValue(user.Id, out string accessToken))
+                {
+                    var jwt = new JwtSecurityTokenHandler().ReadJwtToken(accessToken);
+
+                    var now = DateTime.UtcNow;
+                    var isValid = jwt.ValidFrom <= now && now <= jwt.ValidTo;
+
+                    return new JsonResult(new
+                    {
+                        TokenStatus = isValid ? TokenStatus.Valid : TokenStatus.InValid
+                    });
+                }
+
+                return new JsonResult(new
+                {
+                    TokenStatus = TokenStatus.NotFound
+                });
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "");
+
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
         }
 
         [HttpPost("SignIn")]
@@ -66,9 +105,13 @@ namespace Internship.Web.Controllers.Identity
                         expires: utcNow.Add(TimeSpan.FromMinutes(AuthenticationConfiguration.Lifetime)),
                         signingCredentials: new SigningCredentials(AuthenticationConfiguration.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
+                var accessToken = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+                _cache.Set(user.Id, accessToken);
+
                 return new JsonResult(new
                 {
-                    AccessToken = new JwtSecurityTokenHandler().WriteToken(jwt),
+                    AccessToken = accessToken,
                     Name = user.UserName,
                     Roles = await _userManager.GetRolesAsync(user)
                 });

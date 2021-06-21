@@ -42,6 +42,7 @@ namespace Internship.Web
                     };
                 });
 
+            services.AddMemoryCache();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
