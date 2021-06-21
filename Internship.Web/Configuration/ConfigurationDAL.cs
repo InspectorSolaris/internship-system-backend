@@ -71,6 +71,25 @@ namespace Internship.Web.Configuration
             serviceCollection.AddIdentityCore<Company>(setup)
                 .AddRoles<Role>()
                 .AddEntityFrameworkStores<InternshipDbContext>();
+
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+
+            var studentMaanger = serviceProvider.GetService<UserManager<Student>>();
+            var hitsWorkerManager = serviceProvider.GetService<UserManager<HITsWorker>>();
+            var companyManager = serviceProvider.GetService<UserManager<Company>>();
+            var roleManager = serviceProvider.GetService<RoleManager<Role>>();
+
+            var studentSeedTask = IdentityConfiguration.Seed(studentMaanger, roleManager, "Student");
+
+            studentSeedTask.Wait();
+
+            var hitsWorkerSeedTask = IdentityConfiguration.Seed(hitsWorkerManager, roleManager, "HITsWorker");
+
+            hitsWorkerSeedTask.Wait();
+
+            var companySeedTask = IdentityConfiguration.Seed(companyManager, roleManager, "Company");
+
+            companySeedTask.Wait();
         }
     }
 }

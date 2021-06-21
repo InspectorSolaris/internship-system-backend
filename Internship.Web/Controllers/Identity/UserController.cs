@@ -119,6 +119,7 @@ namespace Internship.Web.Controllers.Identity
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<ActionResult<TUserDto>> Put([FromBody] TUserDto userDto)
         {
             try
@@ -141,6 +142,7 @@ namespace Internship.Web.Controllers.Identity
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<TUserDto>> Post([FromBody] TUserDto userDto)
         {
             try
@@ -158,6 +160,7 @@ namespace Internship.Web.Controllers.Identity
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             try
