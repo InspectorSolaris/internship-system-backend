@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Internship.DAL.Migrations
 {
     [DbContext(typeof(InternshipDbContext))]
-    [Migration("20210621160154_FixPriorityRelations")]
+    [Migration("20210621162203_FixPriorityRelations")]
     partial class FixPriorityRelations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
